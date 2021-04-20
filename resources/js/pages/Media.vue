@@ -42,11 +42,17 @@ export default {
 	},
 	created()
 	{
-		this.observer = new IntersectionObserver(this.observeImages);
+		this.observer = 'IntersectionObserver' in window === false ? null : new IntersectionObserver(this.observeImages);
 	},
 	updated()
 	{
 		this.$store.commit('SET_TITLE', this.$store.getters.current.title);
+
+		if (!this.observer) {
+			Array.from(document.querySelectorAll('.dp-image__image')).forEach((image) => image.src = image.dataset.src);
+			return;
+		}
+
 		this.observer.disconnect();
 		Array.from(document.querySelectorAll('.dp-image__image')).forEach((image) => this.observer.observe(image));
 	},

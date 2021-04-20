@@ -15,10 +15,7 @@ return [
 	'table'           => 'sessions',
 	'store'           => env('SESSION_STORE', null),
 	'lottery'         => [2, 100],
-	'cookie'          => env(
-		'SESSION_COOKIE',
-		\Illuminate\Support\Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
-	),
+	'cookie'          => env('SESSION_COOKIE', \Illuminate\Support\Str::slug(env('APP_NAME', 'Sudu'), '_') . '_session'),
 	'path'            => '/',
 	'domain'          => env('SESSION_DOMAIN', null),
 	'secure'          => env('SESSION_SECURE_COOKIE'),

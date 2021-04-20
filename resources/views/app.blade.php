@@ -10,6 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ config('app.name') }}">
     <link rel="manifest" href="{{ config('app.url')}}/_manifest">
     <meta name="theme-color" content="#004576"/>
     <link rel="apple-touch-icon" href="{{ config('app.url')}}/public/icons/manifest/icon-152.png">

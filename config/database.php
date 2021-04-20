@@ -64,7 +64,7 @@ return [
 		'client'  => env('REDIS_CLIENT', 'phpredis'),
 		'options' => [
 			'cluster' => env('REDIS_CLUSTER', 'redis'),
-			'prefix'  => env('REDIS_PREFIX', \Illuminate\Support\Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_')
+			'prefix'  => env('REDIS_PREFIX', \Illuminate\Support\Str::slug(env('APP_NAME', 'Sudu'), '_') . '_database_')
 		],
 		'default' => [
 			'url'      => env('REDIS_URL'),

@@ -29,7 +29,7 @@ export default {
 		},
 		webShareApiSupported()
 		{
-			return navigator.share;
+			return navigator.share|| true;
 		},
 		user()
 		{
