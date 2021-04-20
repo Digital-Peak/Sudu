@@ -1,0 +1,15 @@
+/public
+/node_modules
+/storage/*.key
+/vendor
+.env
+.phpunit.result.cache
+.idea
+npm-debug.log
+yarn-error.log
+/tmp/
+/.env.production
+/Sudu-*.zip
+/mix-manifest.json
+/tests/coverage/
+/database/database.sqlite

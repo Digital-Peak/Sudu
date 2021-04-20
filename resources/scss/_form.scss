@@ -1,0 +1,34 @@
+/*
+ * @package   Sudu
+ * @copyright Copyright (C) 2021 Digital Peak GmbH. <https://www.digital-peak.com>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ */
+
+.dp-form {
+	&__label {
+		display: block;
+		width: 100%;
+		margin-bottom: 0.5rem;
+	}
+
+	&__input {
+		display: block;
+		width: 100%;
+		margin-bottom: 1rem;
+		padding: 0.5rem;
+		border: var(--dp-border);
+		border-radius: var(--dp-border-radius);
+		box-shadow: var(--dp-shadow);
+		box-sizing: border-box;
+	}
+
+	&__buttons {
+		display: flex;
+		align-items: center;
+		margin-top: 1rem;
+
+		.dp-button {
+			margin-right: 1rem;
+		}
+	}
+}

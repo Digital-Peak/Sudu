@@ -1,0 +1,86 @@
+{
+  "global": {
+    "action": {
+      "save": "Successfully saved {name}",
+      "delete": "Successfully deleted {name}"
+    }
+  },
+  "component": {
+    "image": {
+      "button": {
+        "download": "download"
+      }
+    },
+    "sidebar": {
+      "menu": {
+        "images": "Images",
+        "users": "Users",
+        "usercreate": "Create user",
+        "user": "Account"
+      },
+      "text": {
+        "login": "Login",
+        "logout": "Logout",
+        "title": "Hi {name}"
+      }
+    },
+    "login": {
+      "dialog": {
+        "input": {
+          "name": "Name",
+          "email": "E-Mail",
+          "password": "Password"
+        },
+        "button": {
+          "submit": "Submit",
+          "close": "Close"
+        }
+      }
+    },
+    "modal": {
+      "button": {
+        "close": "Close"
+      }
+    },
+    "toolbar": {
+      "action": {
+        "upload": {
+          "started": "Started to upload image {title}",
+          "success": "Successfully uploaded image {title}"
+        },
+        "delete": {
+          "success": "Successfully deleted image | Successfully deleted images"
+        }
+      },
+      "question": {
+        "foldername": "Type the folder name to create"
+      }
+    }
+  },
+  "store": {
+    "action": {
+      "fetchFiles": {
+        "sync": "Syncing with server...",
+        "offline": "No connection to server"
+      }
+    }
+  },
+  "page": {
+    "user": {
+      "title": "User",
+      "input": {
+        "name": "Name",
+        "email": "E-Mail",
+        "password": "Password"
+      },
+      "button": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "reset": "Reset"
+      }
+    },
+    "users": {
+      "title": "Users"
+    }
+  }
+}

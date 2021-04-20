@@ -1,0 +1,24 @@
+/*
+ * @package   Sudu
+ * @copyright Copyright (C) 2021 Digital Peak GmbH. <https://www.digital-peak.com>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ */
+
+:root {
+	--dp-border: 1px solid #7f8284;
+	--dp-border-radius: 0.2rem;
+	--dp-shadow: 0 0 2px rgba(52, 58, 67, 0.1), 0 2px 5px rgba(52, 58, 67, 0.08), 0 5px 15px rgba(52, 58, 67, 0.08);
+
+	--dp-icon-size: 2.5rem;
+
+	--dp-overlay: rgba(0, 0, 0, 0.9);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.dp-icons {
+	display: none;
+}

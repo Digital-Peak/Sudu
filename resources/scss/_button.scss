@@ -1,0 +1,32 @@
+/*
+ * @package   Sudu
+ * @copyright Copyright (C) 2021 Digital Peak GmbH. <https://www.digital-peak.com>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ */
+@import 'link';
+
+.dp-button {
+	@extend .dp-link-special;
+
+	padding: 0.5rem;
+	color: #000000;
+	background-color: #ffffff;
+	font-weight: bold;
+	border: var(--dp-border);
+	border-radius: var(--dp-border-radius);
+	cursor: pointer;
+
+	&-save {
+		@extend .dp-button;
+		color: #ffffff;
+		background-color: #1D4ED8;
+		border-color: #1D4ED8;
+	}
+
+	&-cancel {
+		@extend .dp-button;
+		color: #000000;
+		background-color: #F87171;
+		border-color: #F87171;
+	}
+}
