@@ -38,5 +38,14 @@ The following links provide information for developers:
 - [Api documentation](docs/developer/Api.md)
 - [Contribution](docs/developer/Contribution.md)
 
+## Powered by
+This project would not be possible without the following libraries and projects:
+- [Laravel](https://github.com/laravel/laravel)
+- [Vue.js](https://github.com/vuejs/vue)
+- [PHPUnit](https://github.com/sebastianbergmann/phpunit)
+- [Webpack and their thousands of plugins](https://github.com/webpack/webpack)
+- [Composer](https://github.com/composer/composer)
+- Many more ...
+
 ## Licensing
 The source code is licensed under GPL v3. License is available [here](LICENSE).
