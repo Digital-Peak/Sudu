@@ -5,6 +5,9 @@
 # Sudu
 A free and open source image gallery with performance in mind.
 
+## Demo
+We put up a little demo [here](https://www.digital-peak.com/sudu).
+
 ## Features
 - Lightweight and super fast
 - Offline support
