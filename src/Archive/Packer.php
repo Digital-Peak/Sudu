@@ -7,22 +7,22 @@
 
 namespace Sudu\Archive;
 
+use ZipArchive;
+
 class Packer
 {
-	public function extract(string $path, $destination = null)
-	{
+	public function extract(string $path, $destination = null) {
 		if (!file_exists($path)) {
 			return;
 		}
 
-		$zip = new \ZipArchive();
+		$zip = new ZipArchive();
 		$zip->open($path);
 		$zip->extractTo($destination ?: dirname($path));
 		$zip->close();
 	}
 
-	public function createZip(array $images, $baseDir = null)
-	{
+	public function createZip(array $images, $baseDir = null) {
 		$baseDir     = $baseDir ?: config('app.images_folder');
 		$archivesDir = dirname($baseDir) . '/archives';
 
@@ -34,8 +34,8 @@ class Packer
 
 		$fileName = $archivesDir . '/' . md5(serialize($images)) . '.zip';
 		if (!file_exists($fileName)) {
-			$zip = new \ZipArchive();
-			$zip->open($fileName, \ZipArchive::CREATE);
+			$zip = new ZipArchive();
+			$zip->open($fileName, ZipArchive::CREATE);
 
 			foreach ($images as $image) {
 				$imagePath = str_replace('images/', '/', $image);

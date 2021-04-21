@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-	public function run()
-	{
+	public function run() {
 		DB::table('users')->insert(['name' => 'Admin', 'email' => 'admin@example.com', 'password' => bcrypt('admin')]);
 	}
 }

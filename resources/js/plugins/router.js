@@ -14,8 +14,8 @@ const Users = () => import('../pages/Users');
 export default createRouter({
 	history: createWebHistory(store.state.config.webBase),
 	routes: [
-		{path: '/media/:pathMatch(.*\.png)', component: Media},
-		{path: '/media/:pathMatch(.*\.jpg)', component: Media},
+		{path: '/media/:pathMatch(.*.png)', component: Media},
+		{path: '/media/:pathMatch(.*.jpg)', component: Media},
 		{path: '/media/:pathMatch(.*)*', component: Media},
 		{path: '/user', component: User},
 		{path: '/user/:id', component: User, props: true},

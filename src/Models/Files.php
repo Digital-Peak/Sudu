@@ -7,16 +7,16 @@
 
 namespace Sudu\Models;
 
+use DirectoryIterator;
 use Sudu\Archive\Packer;
 use Sudu\Entity\Directory;
 use Sudu\Entity\Image;
 
 class Files
 {
-	public function getFiles(string $path, string $appName = null): array
-	{
+	public function getFiles(string $path, string $appName = null): array {
 		// Extract zip archives first
-		foreach (new \DirectoryIterator($path) as $file) {
+		foreach (new DirectoryIterator($path) as $file) {
 			if ($file->getExtension() != 'zip') {
 				continue;
 			}
@@ -26,7 +26,7 @@ class Files
 		}
 
 		$data = [];
-		foreach (new \DirectoryIterator($path) as $file) {
+		foreach (new DirectoryIterator($path) as $file) {
 			// Ignore dot files or when they start with an underscore
 			if ($file->isDot() || strpos($file->getFilename(), '_') === 0) {
 				continue;

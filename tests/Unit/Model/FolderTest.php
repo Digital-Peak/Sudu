@@ -7,18 +7,17 @@
 
 namespace Sudu\Tests\Unit\Model;
 
-use Sudu\Models\Folder;
-use Sudu\Tests\FileOperations;
 use Illuminate\Contracts\Filesystem\FileExistsException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use PHPUnit\Framework\TestCase;
+use Sudu\Models\Folder;
+use Sudu\Tests\FileOperations;
 
 class FolderTest extends TestCase
 {
 	use FileOperations;
 
-	public function testCreateFolder()
-	{
+	public function testCreateFolder() {
 		$model  = new Folder();
 		$folder = $model->createFolder('test', $this->getImagesRoot());
 
@@ -27,16 +26,14 @@ class FolderTest extends TestCase
 		$this->assertEquals('/test', $folder->path);
 	}
 
-	public function testCreateFolderInvalidParent()
-	{
+	public function testCreateFolderInvalidParent() {
 		$this->expectException(FileNotFoundException::class);
 
 		$model = new Folder();
 		$model->createFolder('test', $this->getImagesRoot() . '/invalid');
 	}
 
-	public function testCreateFolderExistingLocation()
-	{
+	public function testCreateFolderExistingLocation() {
 		$this->expectException(FileExistsException::class);
 
 		$this->createFolder('/existing');

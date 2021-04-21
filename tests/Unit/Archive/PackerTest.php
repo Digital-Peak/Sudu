@@ -7,16 +7,15 @@
 
 namespace Sudu\Tests\Unit\Archive;
 
+use PHPUnit\Framework\TestCase;
 use Sudu\Archive\Packer;
 use Sudu\Tests\FileOperations;
-use PHPUnit\Framework\TestCase;
 
 class PackerTest extends TestCase
 {
 	use FileOperations;
 
-	public function testArchiveValidFiles()
-	{
+	public function testArchiveValidFiles() {
 		$packer   = new Packer();
 		$fileName = $packer->createZip(['images/image.png'], $this->getImagesRoot());
 
@@ -24,24 +23,21 @@ class PackerTest extends TestCase
 		$this->assertFileExists($fileName);
 	}
 
-	public function testArchiveInvalidFiles()
-	{
+	public function testArchiveInvalidFiles() {
 		$packer   = new Packer();
 		$fileName = $packer->createZip(['images/image-invalid.png'], $this->getImagesRoot());
 
 		$this->assertEmpty($fileName);
 	}
 
-	public function testExtractValidFile()
-	{
+	public function testExtractValidFile() {
 		$packer = new Packer();
 		$packer->extract($this->getRoot() . '/test.zip', $this->getImagesRoot());
 
 		$this->assertFileExists($this->getImagesRoot() . '/image.png');
 	}
 
-	public function testExtractInvalidFile()
-	{
+	public function testExtractInvalidFile() {
 		$this->deleteFs('');
 
 		$packer = new Packer();

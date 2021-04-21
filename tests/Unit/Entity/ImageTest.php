@@ -7,16 +7,15 @@
 
 namespace Sudu\Tests\Unit\Entity;
 
+use PHPUnit\Framework\TestCase;
 use Sudu\Entity\Image;
 use Sudu\Tests\FileOperations;
-use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase
 {
 	use FileOperations;
 
-	public function testImagePng()
-	{
+	public function testImagePng() {
 		$image = new Image($this->getImagesRoot() . '/image.png');
 
 		$this->assertNotEmpty('id', $image->id);
@@ -32,8 +31,7 @@ class ImageTest extends TestCase
 		$this->assertFileExists($this->getImagesRoot() . '/_w' . Image::THUMBNAIL_SIZE . '/image.png');
 	}
 
-	public function testImageJpg()
-	{
+	public function testImageJpg() {
 		$image = new Image($this->getImagesRoot() . '/image.jpg');
 
 		$this->assertNotEmpty('id', $image->id);

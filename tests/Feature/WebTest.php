@@ -11,8 +11,7 @@ use Sudu\Tests\TestCase;
 
 class WebTest extends TestCase
 {
-	public function testGetWebSite()
-	{
+	public function testGetWebSite() {
 		$this->copy($this->getProjectRoot() . '/public', $this->getRoot() . '/public');
 		$this->copy($this->getProjectRoot() . '/resources', $this->getRoot() . '/resources');
 

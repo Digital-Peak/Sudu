@@ -7,16 +7,15 @@
 
 namespace Sudu\Tests\Unit\Entity;
 
+use PHPUnit\Framework\TestCase;
 use Sudu\Entity\Directory;
 use Sudu\Tests\FileOperations;
-use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase
 {
 	use FileOperations;
 
-	public function testDirectory()
-	{
+	public function testDirectory() {
 		$directory = new Directory(__DIR__);
 
 		$this->assertEquals('dir', $directory->type);
@@ -24,8 +23,7 @@ class DirectoryTest extends TestCase
 		$this->assertEquals(__DIR__, $directory->path);
 	}
 
-	public function testDirectoryImages()
-	{
+	public function testDirectoryImages() {
 		$directory = new Directory($this->getImagesRoot());
 
 		$this->assertEquals('dir', $directory->type);

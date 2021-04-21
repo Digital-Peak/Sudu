@@ -6,8 +6,8 @@
 
 <template>
 	<div class="dp-users">
-		<div v-for="(user, index) in users" :class="{'bg-gray-200': index % 2 === 0}" class="dp-users__user dp-user">
-			<user-remove-icon @click="deleteUser(user)" v-if="user.id != loggedInUser.id" class="dp-user__icon"/>
+		<div v-for="user in users" :key="user.id" class="dp-users__user dp-user">
+			<user-remove-icon @click="deleteUser(user)" v-if="user.id !== loggedInUser.id" class="dp-user__icon"/>
 			<router-link :to="'/user/' + user.id" class="dp-user__edit-link dp-link-special">
 				<pencil-icon class="dp-user__icon"></pencil-icon>
 			</router-link>
@@ -18,30 +18,26 @@
 </template>
 
 <script>
-import {UserAddIcon, UserRemoveIcon, PencilIcon} from '@heroicons/vue/solid';
+import {UserRemoveIcon, PencilIcon} from '@heroicons/vue/solid';
 import api from '../plugins/api';
 
 export default {
-	data()
-	{
+	data() {
 		return {users: []};
 	},
 	computed: {
-		loggedInUser()
-		{
+		loggedInUser() {
 			return this.$store.state.user;
 		}
 	},
-	created()
-	{
+	created() {
 		this.$store.commit('SET_TITLE', this.$t('page.users.title'));
 		api.users().list()
 			.then((users) => this.users = users)
 			.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 	},
 	methods: {
-		deleteUser(user)
-		{
+		deleteUser(user) {
 			api.users().delete(user.id)
 				.then(() => api.users().list())
 				.then((users) => this.users = users)
@@ -49,7 +45,7 @@ export default {
 				.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		}
 	},
-	components: {UserAddIcon, UserRemoveIcon, PencilIcon}
+	components: {UserRemoveIcon, PencilIcon}
 };
 </script>
 

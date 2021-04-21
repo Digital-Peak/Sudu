@@ -8,6 +8,8 @@
 namespace Sudu\Tests;
 
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * Creates an application for web requests.
@@ -17,10 +19,9 @@ trait CreatesApplication
 	/**
 	 * Creates the application.
 	 *
-	 * @return \Illuminate\Foundation\Application
+	 * @return Application
 	 */
-	public function createApplication()
-	{
+	public function createApplication() {
 		$app = require __DIR__ . '/../bootstrap/app.php';
 
 		$app->make(Kernel::class)->bootstrap();
@@ -29,7 +30,7 @@ trait CreatesApplication
 
 		$commands = ['clear-compiled', 'cache:clear', 'view:clear', 'config:clear', 'route:clear'];
 		foreach ($commands as $command) {
-			\Illuminate\Support\Facades\Artisan::call($command);
+			Artisan::call($command);
 		}
 
 		return $app;

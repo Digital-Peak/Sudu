@@ -11,7 +11,7 @@ export default createStore({
 	state: {
 		title: '',
 		files: [],
-		selectedImage: null,
+		image: null,
 		user: {id: 0, name: null, email: null, password: null},
 		loadingStatus: false,
 		showMenu: localStorage.getItem('Sudu.menu.state') === 'true',
@@ -19,16 +19,13 @@ export default createStore({
 		message: null
 	},
 	getters: {
-		images(state)
-		{
-			return state.files.filter(file => file.type == 'image');
+		images(state) {
+			return state.files.filter((file) => file.type === 'image');
 		},
-		directories(state)
-		{
-			return state.files.filter((file, index) => index > 0 && file.type == 'dir');
+		directories(state) {
+			return state.files.filter((file, index) => index > 0 && file.type === 'dir');
 		},
-		current(state)
-		{
+		current(state) {
 			if (state.files.length === 0) {
 				return {title: state.config.webBase};
 			}
@@ -36,13 +33,12 @@ export default createStore({
 		}
 	},
 	actions: {
-		fetchFiles(context, path)
-		{
+		fetchFiles(context, path) {
 			// The API request url
 			const url = context.state.config.webBase + '/public/api/v1/files' + path;
 
 			// Load first from cache
-			if (window.caches != undefined) {
+			if (window.caches !== undefined) {
 				window.caches.open('Sudu').then((cache) => cache.match(url))
 					.then((response) => {
 						if (!response) {
@@ -57,7 +53,7 @@ export default createStore({
 
 						context.commit('SET_FILES', files);
 					})
-					//Do nothing here, so we can get data from the network
+					// Do nothing here, so we can get data from the network
 					.catch(() => true);
 			}
 
@@ -71,48 +67,43 @@ export default createStore({
 				})
 				.catch((error) => context.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		},
-		fetchUser(context)
-		{
+		fetchUser(context) {
 			return api.users().get('me')
 				.then((user) => {
 					context.commit('SET_USER', user);
-					return user
+					return user;
 				})
 				.catch((error) => context.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		}
 	},
 	mutations: {
-		SET_FILES(state, files)
-		{
+		SET_FILES(state, files) {
 			state.files = files;
 		},
-		SET_MESSAGE(state, message)
-		{
+		SET_MESSAGE(state, message) {
 			state.message = message;
 		},
-		SET_USER(state, user)
-		{
+		SET_USER(state, user) {
 			if (!user) {
 				user = {id: 0, name: null, email: null, password: null};
 			}
 			state.user = user;
 		},
-		SET_SHOW_MENU(state, showMenu)
-		{
+		SET_SHOW_MENU(state, showMenu) {
 			localStorage.setItem('Sudu.menu.state', showMenu);
 			state.showMenu = showMenu;
 		},
-		SET_LOADING_STATUS(state, loadingStatus)
-		{
+		SET_LOADING_STATUS(state, loadingStatus) {
 			state.loadingStatus = loadingStatus;
 		},
-		SET_TITLE(state, title)
-		{
+		SET_TITLE(state, title) {
 			state.title = title;
 		},
-		SELECT_IMAGE(state, image)
-		{
-			state.selectedImage = image;
+		SET_IMAGE(state, image) {
+			state.image = image;
+		},
+		SELECT_IMAGE(state, payload) {
+			state.files.find((file) => file.id === payload.id).selected = payload.checked;
 		}
 	}
 });

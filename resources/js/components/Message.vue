@@ -13,14 +13,12 @@
 <script>
 export default {
 	computed: {
-		message()
-		{
+		message() {
 			return this.$store.state.message;
 		}
 	},
-	updated()
-	{
-		if (!this.message || this.message.type == 'error') {
+	updated() {
+		if (!this.message || this.message.type === 'error') {
 			return;
 		}
 

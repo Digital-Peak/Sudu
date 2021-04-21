@@ -37,8 +37,8 @@
 				<span>{{ $t('component.sidebar.text.login') }}</span>
 			</button>
 		</nav>
+		<dp-login-dialog v-if="showLogin" @close="showLogin = false"></dp-login-dialog>
 	</aside>
-	<dp-login-dialog v-if="showLogin" @close="showLogin = false"></dp-login-dialog>
 </template>
 
 <script>
@@ -46,38 +46,32 @@ import {defineAsyncComponent} from 'vue';
 import {LoginIcon, LogoutIcon, MenuIcon, PhotographIcon, UserAddIcon, UserCircleIcon, UsersIcon, XIcon} from '@heroicons/vue/solid';
 import api from '../plugins/api';
 
-const LoginDialog = defineAsyncComponent(() => import( './LoginDialog'));
+const LoginDialog = defineAsyncComponent(() => import('./LoginDialog'));
 
 export default {
-	data()
-	{
-		return {showLogin: false}
+	data() {
+		return {showLogin: false};
 	},
 	computed: {
-		user()
-		{
+		user() {
 			return this.$store.state.user;
 		},
-		showMenu()
-		{
+		showMenu() {
 			return this.$store.state.showMenu;
 		}
 	},
 	methods: {
-		logout()
-		{
+		logout() {
 			api.user().logout()
 				.then(() => this.$store.commit('SET_USER'))
 				.then(() => this.$store.commit('SET_MESSAGE'))
 				.then(() => this.$router.push('/media/'))
 				.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		},
-		toggleMenu()
-		{
+		toggleMenu() {
 			this.$store.commit('SET_SHOW_MENU', !this.showMenu);
 		},
-		isMenuActive(input, exact)
-		{
+		isMenuActive(input, exact) {
 			if (exact) {
 				return (Array.isArray(input) ? input : [input]).some((path) => this.$route.path === path);
 			}
@@ -152,7 +146,6 @@ export default {
 			background-color: #E2E4EAFF;
 		}
 	}
-
 
 	@media only screen and (max-width: 639px) {
 		&__menu {

@@ -5,12 +5,12 @@
 -->
 
 <template>
-	<dp-toolbar></dp-toolbar>
 	<div class="dp-media" ref="dpMedia">
-		<dp-directories v-for="directory in directories" :directory="directory"></dp-directories>
-		<dp-images v-for="image in images" :image="image"></dp-images>
+		<dp-toolbar></dp-toolbar>
+		<dp-directories v-for="directory in directories" :directory="directory" :key="directory.path"></dp-directories>
+		<dp-images v-for="image in images" :image="image" :key="image.id"></dp-images>
+		<dp-modal v-if="selected" :image="selected"></dp-modal>
 	</div>
-	<dp-modal v-if="selected" :image="selected"></dp-modal>
 </template>
 
 <script>
@@ -19,33 +19,27 @@ import Toolbar from '../components/media/Toolbar';
 import Image from '../components/media/Image';
 import Directory from '../components/media/Directory';
 
-const Modal = defineAsyncComponent(() => import( '../components/media/Modal'));
+const Modal = defineAsyncComponent(() => import('../components/media/Modal'));
 
 export default {
-	data()
-	{
+	data() {
 		return {observer: null};
 	},
 	computed: {
-		directories()
-		{
+		directories() {
 			return this.$store.getters.directories;
 		},
-		images()
-		{
+		images() {
 			return this.$store.getters.images;
 		},
-		selected()
-		{
-			return this.$store.state.selectedImage;
+		selected() {
+			return this.$store.state.image;
 		}
 	},
-	created()
-	{
+	created() {
 		this.observer = 'IntersectionObserver' in window === false ? null : new IntersectionObserver(this.observeImages);
 	},
-	updated()
-	{
+	updated() {
 		this.$store.commit('SET_TITLE', this.$store.getters.current.title);
 
 		const images = Array.from(document.querySelectorAll('.dp-image__image'));
@@ -68,8 +62,7 @@ export default {
 		images.forEach((image) => this.observer.observe(image));
 	},
 	methods: {
-		observeImages(entries)
-		{
+		observeImages(entries) {
 			entries.forEach((entry) => {
 				if (!entry.isIntersecting) {
 					return;

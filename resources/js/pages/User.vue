@@ -31,27 +31,23 @@ import api from '../plugins/api';
 
 export default {
 	props: ['id'],
-	data()
-	{
+	data() {
 		return {user: {}};
 	},
-	created()
-	{
+	created() {
 		this.$store.commit('SET_TITLE', this.$t('page.user.title'));
 		this.reset();
 	},
 	methods: {
-		save()
-		{
+		save() {
 			const user = Object.assign(this.user);
 			user.password = this.$refs.dpInputPassword.value;
 			(user.id ? api.users().update(user) : api.users().add(user))
 				.then(() => this.$store.commit('SET_MESSAGE', {text: 'global.action.save', props: {name: user.name}, type: 'success'}))
-				.then(() => this.id == 'me' ? this.$store.dispatch('fetchUser') : this.$router.push('/users'))
+				.then(() => this.id === 'me' ? this.$store.dispatch('fetchUser') : this.$router.push('/users'))
 				.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		},
-		reset()
-		{
+		reset() {
 			if (!this.id) {
 				this.user = {};
 				return;
@@ -68,8 +64,7 @@ export default {
 		}
 	},
 	watch: {
-		'$props.id'()
-		{
+		'$props.id'() {
 			this.reset();
 		}
 	}

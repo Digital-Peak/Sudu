@@ -12,8 +12,7 @@ use Sudu\Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-	public function itestLogin()
-	{
+	public function itestLogin() {
 		$user = User::factory()->create(['email' => 'admin@example.com', 'password' => bcrypt('test')]);
 
 		$response = $this->startSession()->postJson('/api/v1/user/login', ['email' => 'admin@example.com', 'password' => 'test']);

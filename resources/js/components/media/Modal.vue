@@ -17,15 +17,15 @@
 				</svg>
 				<share-icon @click="share" v-if="webShareApiSupported" class="dp-modal__share"/>
 				<router-link :to="'/media' + encodeURI(image.path.slice(0, image.path.lastIndexOf('/') + 1))"
-							 :aria-label="$t('component.modal.button.close')">
+					:aria-label="$t('component.modal.button.close')">
 					<x-icon class="dp-modal__close"/>
 				</router-link>
 			</div>
 			<arrow-right-icon @click="next(image.id)" class="dp-modal__next"/>
 		</div>
 		<img class="dp-modal__image" :src="imagePath(image.path)" :width="image.data.width" :height="image.data.height"
-			 @load="loaded(image.id)" @touchstart="handleTouchStart" :alt="image.title"
-			 @touchmove="handleTouchMove" @touchend="handleTouchEnd" @swiped-right="prev(image.id)" @swiped-left="next(image.id)">
+			@load="loaded(image.id)" @touchstart="handleTouchStart" :alt="image.title"
+			@touchmove="handleTouchMove" @touchend="handleTouchEnd" @swiped-right="prev(image.id)" @swiped-left="next(image.id)">
 		<div class="dp-modal__caption">{{ image.title }}</div>
 	</div>
 </template>
@@ -35,8 +35,7 @@ import {ArrowLeftIcon, ArrowRightIcon, ShareIcon, XIcon} from '@heroicons/vue/so
 
 export default {
 	props: ['image'],
-	data()
-	{
+	data() {
 		return {
 			swiper: {
 				xDown: null,
@@ -45,25 +44,21 @@ export default {
 				startEl: null
 			},
 			isFull: false
-		}
+		};
 	},
 	computed: {
-		webShareApiSupported()
-		{
+		webShareApiSupported() {
 			return navigator.share;
 		}
 	},
 	methods: {
-		imagePath(path)
-		{
+		imagePath(path) {
 			return this.$store.state.config.webBase + '/' + this.$store.state.config.webImageFolder + path;
 		},
-		loaded()
-		{
+		loaded() {
 			this.$store.commit('SET_LOADING_STATUS', false);
 		},
-		full()
-		{
+		full() {
 			if (!document.fullscreenElement) {
 				this.isFull = true;
 				this.$refs.dpModal.requestFullscreen();
@@ -72,8 +67,7 @@ export default {
 				this.isFull = false;
 			}
 		},
-		share()
-		{
+		share() {
 			if (navigator.share) {
 				navigator.share({
 					title: this.image.title,
@@ -82,10 +76,9 @@ export default {
 				});
 			}
 		},
-		prev(id)
-		{
+		prev(id) {
 			this.$store.getters.images.forEach((image, index, images) => {
-				if (image.id != id) {
+				if (image.id !== id) {
 					return;
 				}
 
@@ -94,26 +87,24 @@ export default {
 				}
 
 				this.$store.commit('SET_LOADING_STATUS', true);
-				this.$store.commit('SELECT_IMAGE', images[index - 1]);
+				this.$store.commit('SET_IMAGE', images[index - 1]);
 			});
 		},
-		next(id)
-		{
+		next(id) {
 			this.$store.getters.images.forEach((image, index, images) => {
-				if (image.id != id) {
+				if (image.id !== id) {
 					return;
 				}
 
-				if (images.length == index + 1) {
+				if (images.length === index + 1) {
 					index = -1;
 				}
 
 				this.$store.commit('SET_LOADING_STATUS', true);
-				this.$store.commit('SELECT_IMAGE', images[index + 1]);
+				this.$store.commit('SET_IMAGE', images[index + 1]);
 			});
 		},
-		handleTouchEnd(e)
-		{
+		handleTouchEnd(e) {
 			if (this.swiper.startEl !== e.target) {
 				return;
 			}
@@ -126,16 +117,14 @@ export default {
 			this.swiper.xDown = null;
 			this.swiper.timeDown = null;
 		},
-		handleTouchStart(e)
-		{
+		handleTouchStart(e) {
 			this.swiper.startEl = e.target;
 
 			this.swiper.timeDown = Date.now();
 			this.swiper.xDown = e.touches[0].clientX;
 			this.swiper.xDiff = 0;
 		},
-		handleTouchMove(e)
-		{
+		handleTouchMove(e) {
 			if (!this.swiper.xDown) {
 				return;
 			}

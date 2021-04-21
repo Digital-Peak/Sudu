@@ -10,6 +10,9 @@ namespace Sudu\Entity;
 class Directory
 {
 	/** @var string */
+	public $id;
+
+	/** @var string */
 	public $title;
 
 	/** @var string */
@@ -18,8 +21,7 @@ class Directory
 	/** @var string */
 	public $type = 'dir';
 
-	public function __construct(string $path)
-	{
+	public function __construct(string $path) {
 		$this->title = str_replace(['-', '_'], ' ', ucfirst(basename($path)));
 		$this->path  = rtrim($path, '/');
 
@@ -33,5 +35,6 @@ class Directory
 
 		// Normalize
 		$this->path = str_replace('//', '/', $this->path);
+		$this->id   = md5($this->path);
 	}
 }

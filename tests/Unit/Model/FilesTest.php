@@ -7,16 +7,15 @@
 
 namespace Sudu\Tests\Unit\Model;
 
+use PHPUnit\Framework\TestCase;
 use Sudu\Models\Files;
 use Sudu\Tests\FileOperations;
-use PHPUnit\Framework\TestCase;
 
 class FilesTest extends TestCase
 {
 	use FileOperations;
 
-	public function testFiles()
-	{
+	public function testFiles() {
 		$model = new Files();
 		$files = $model->getFiles($this->getImagesRoot(), 'TestApp');
 
@@ -29,8 +28,7 @@ class FilesTest extends TestCase
 		$this->assertEquals('image', $files[2]->type);
 	}
 
-	public function testFilesInSubfolder()
-	{
+	public function testFilesInSubfolder() {
 		$this->copy('image.jpg', '/sub/image.jpg');
 
 		$model  = new Files();
@@ -45,8 +43,7 @@ class FilesTest extends TestCase
 		$this->assertEquals('image', $images[2]->type);
 	}
 
-	public function testFilesWithSubfolder()
-	{
+	public function testFilesWithSubfolder() {
 		$this->createFolder('sub');
 
 		$model  = new Files();
@@ -61,8 +58,7 @@ class FilesTest extends TestCase
 		$this->assertEquals('image', $images[3]->type);
 	}
 
-	public function testFilesWithInvalidFile()
-	{
+	public function testFilesWithInvalidFile() {
 		file_put_contents($this->getImagesRoot() . '/test.txt', 'test');
 		$model = new Files();
 
@@ -71,8 +67,7 @@ class FilesTest extends TestCase
 		}
 	}
 
-	public function testIgnoredFiles()
-	{
+	public function testIgnoredFiles() {
 		$this->deleteFs('');
 		$this->copy('image.jpg', '/_image.jpg');
 		$this->createFolder('_sub');
@@ -85,8 +80,7 @@ class FilesTest extends TestCase
 		$this->assertEquals('dir', $images[0]->type);
 	}
 
-	public function testExtractFiles()
-	{
+	public function testExtractFiles() {
 		$this->deleteFs('');
 		$this->copy('/../test.zip', 'test.zip');
 

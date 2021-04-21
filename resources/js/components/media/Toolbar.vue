@@ -23,26 +23,21 @@ import api from '../../plugins/api';
 
 export default {
 	computed: {
-		selectedImages()
-		{
+		selectedImages() {
 			return this.$store.getters.images.filter((image) => image.selected);
 		},
-		webShareApiSupported()
-		{
+		webShareApiSupported() {
 			return navigator.share;
 		},
-		user()
-		{
+		user() {
 			return this.$store.state.user;
 		}
 	},
-	mounted()
-	{
+	mounted() {
 		this.$refs.dpDownloadIcon.id = 'dp-icon-download';
 	},
 	methods: {
-		download()
-		{
+		download() {
 			this.$store.commit('SET_LOADING_STATUS', true);
 			api.files().download(this.$store.getters.images.filter((image) => image.selected).map((image) => image.path))
 				.then(data => {
@@ -50,14 +45,13 @@ export default {
 					if (!data || !data.file) {
 						return;
 					}
-					let link = document.createElement('a');
+					const link = document.createElement('a');
 					link.href = this.$store.state.config.webBase + data.file;
 					link.download = 'download.zip';
 					link.click();
 				}).catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		},
-		upload(event)
-		{
+		upload(event) {
 			const promises = [];
 			Array.from(event.target.files).forEach((image) => {
 				this.$store.commit(
@@ -83,8 +77,7 @@ export default {
 				this.$store.dispatch('fetchFiles', this.$store.getters.current.path);
 			});
 		},
-		deleteImages()
-		{
+		deleteImages() {
 			this.$store.commit('SET_LOADING_STATUS', true);
 
 			const deleteCount = this.selectedImages.length;
@@ -97,8 +90,7 @@ export default {
 				})
 				.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		},
-		share()
-		{
+		share() {
 			if (navigator.share) {
 				navigator.share({
 					title: this.$store.getters.current.title,
@@ -107,8 +99,7 @@ export default {
 				});
 			}
 		},
-		createFolder()
-		{
+		createFolder() {
 			const name = prompt(this.$t('component.toolbar.question.foldername'));
 			if (!name) {
 				return;

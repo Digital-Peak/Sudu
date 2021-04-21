@@ -5,13 +5,15 @@
 -->
 
 <template>
-	<dp-message></dp-message>
-	<dp-sidebar></dp-sidebar>
-	<dp-loader></dp-loader>
-	<dp-header></dp-header>
-	<main>
-		<router-view/>
-	</main>
+	<div>
+		<dp-message></dp-message>
+		<dp-sidebar></dp-sidebar>
+		<dp-loader></dp-loader>
+		<dp-header></dp-header>
+		<main>
+			<router-view/>
+		</main>
+	</div>
 </template>
 
 <script>
@@ -24,13 +26,11 @@ import api from './plugins/api';
 export default {
 	name: 'App',
 	computed: {
-		loading()
-		{
+		loading() {
 			return this.$store.state.loadingStatus;
 		}
 	},
-	created()
-	{
+	created() {
 		if (!parseInt(localStorage.getItem('Sudu.user'))) {
 			return;
 		}
@@ -40,8 +40,7 @@ export default {
 			.catch(() => localStorage.removeItem('Sudu.user'));
 	},
 	watch: {
-		async $route(to, from)
-		{
+		async $route(to, from) {
 			// Hide menu when route has changed, but not on initial load
 			if (from.matched.length !== 0) {
 				this.$store.commit('SET_SHOW_MENU', false);
@@ -52,17 +51,16 @@ export default {
 			}
 
 			// If we land here by direct link
-			if (from.matched.length === 0
+			if (from.matched.length === 0 ||
 				// If it is not an image
-				|| to.fullPath.indexOf('.') === -1 || !['jpg', 'png', 'jpeg', 'webp'].includes(to.fullPath.split('.').pop().toLowerCase())) {
+				to.fullPath.indexOf('.') === -1 || !['jpg', 'png', 'jpeg', 'webp'].includes(to.fullPath.split('.').pop().toLowerCase())) {
 				await this.$store.dispatch('fetchFiles', to.fullPath.replace('/media', ''));
 			}
 
 			// Select the image from the path if a directory then selected image will be reset
-			this.$store.commit('SELECT_IMAGE', this.$store.state.files.find((file) => file.type === 'image' && encodeURI(file.path) == to.fullPath.replace('/media', '')));
+			this.$store.commit('SET_IMAGE', this.$store.state.files.find((file) => file.type === 'image' && encodeURI(file.path) === to.fullPath.replace('/media', '')));
 		},
-		'$store.state.user'(to)
-		{
+		'$store.state.user'(to) {
 			localStorage.setItem('Sudu.user', to.id);
 		}
 	},

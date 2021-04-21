@@ -11,8 +11,7 @@
 <script>
 export default {
 	computed: {
-		title()
-		{
+		title() {
 			return this.$store.state.title;
 		}
 	}

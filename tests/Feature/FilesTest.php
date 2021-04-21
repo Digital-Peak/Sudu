@@ -7,15 +7,14 @@
 
 namespace Sudu\Tests\Feature;
 
-use Sudu\Models\User;
-use Sudu\Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Laravel\Sanctum\Sanctum;
+use Sudu\Models\User;
+use Sudu\Tests\TestCase;
 
 class FilesTest extends TestCase
 {
-	public function testGetRootFiles()
-	{
+	public function testGetRootFiles() {
 		$response = $this->getJson('/api/v1/files');
 
 		$response->assertStatus(200);
@@ -38,8 +37,7 @@ class FilesTest extends TestCase
 		]);
 	}
 
-	public function testGetRootFilesEmpty()
-	{
+	public function testGetRootFilesEmpty() {
 		$this->deleteFs('');
 
 		$response = $this->getJson('/api/v1/files');
@@ -49,8 +47,7 @@ class FilesTest extends TestCase
 		$this->assertDirectoryExists($this->getImagesRoot());
 	}
 
-	public function testGetSubpath()
-	{
+	public function testGetSubpath() {
 		$this->copy('/image.jpg', '/sub/test.jpg');
 
 		$response = $this->getJson('/api/v1/files/sub');
@@ -75,16 +72,14 @@ class FilesTest extends TestCase
 		]);
 	}
 
-	public function testGetNotExistingFolder()
-	{
+	public function testGetNotExistingFolder() {
 		$response = $this->getJson('/api/v1/files/invalid');
 
 		$response->assertStatus(404);
 		$response->assertExactJson(['message' => 'Path invalid not found on ' . $this->getImagesRoot()]);
 	}
 
-	public function testGetInvalidPath()
-	{
+	public function testGetInvalidPath() {
 		$response = $this->getJson('/api/v1/files/image.jpg');
 
 		$response->assertStatus(200);
@@ -107,8 +102,7 @@ class FilesTest extends TestCase
 		]);
 	}
 
-	public function testCreateFolderRoot()
-	{
+	public function testCreateFolderRoot() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$response = $this->postJson('/api/v1/files/folder/test');
@@ -117,8 +111,7 @@ class FilesTest extends TestCase
 		$response->assertExactJson(['title' => 'Test', 'path' => '/test', 'type' => 'dir']);
 	}
 
-	public function testCreateFolderParent()
-	{
+	public function testCreateFolderParent() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$this->createFolder('/sub');
@@ -129,8 +122,7 @@ class FilesTest extends TestCase
 		$response->assertExactJson(['title' => 'Test', 'path' => '/sub/test', 'type' => 'dir']);
 	}
 
-	public function testCreateImage()
-	{
+	public function testCreateImage() {
 		$this->deleteFs('');
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
@@ -140,8 +132,7 @@ class FilesTest extends TestCase
 		$response->assertJson(['title' => 'New.jpg', 'path' => '/new.jpg', 'type' => 'image']);
 	}
 
-	public function testDeleteImage()
-	{
+	public function testDeleteImage() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$response = $this->deleteJson('/api/v1/files/images/', ['images' => ['image.jpg']]);
@@ -162,8 +153,7 @@ class FilesTest extends TestCase
 		]);
 	}
 
-	public function testDownloadArchive()
-	{
+	public function testDownloadArchive() {
 		$response = $this->postJson('/api/v1/files/archive', ['images' => ['image.jpg']]);
 
 		$response->assertStatus(200);

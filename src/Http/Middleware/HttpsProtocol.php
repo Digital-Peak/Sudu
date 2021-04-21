@@ -7,10 +7,11 @@
 
 namespace Sudu\Http\Middleware;
 
+use Closure;
+
 class HttpsProtocol
 {
-	public function handle($request, \Closure $next)
-	{
+	public function handle($request, Closure $next) {
 		if (!$request->secure() && !config('app.debug')) {
 			return redirect()->secure($request->getRequestUri());
 		}

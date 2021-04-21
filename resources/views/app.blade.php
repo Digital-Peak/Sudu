@@ -8,18 +8,18 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ config('app.name') }}">
-    <meta name="theme-color" content="#004576"/>
-    <link rel="manifest" href="{{ config('app.url')}}/_manifest">
-    <link rel="apple-touch-icon" href="{{ config('app.url')}}/public/icons/manifest/icon-152.png">
-    <link rel="icon" href="{{ config('app.url') . '/public/favicon.ico' }}" type="image/x-icon"/>
-    <title>{{ config('app.name') }}</title>
-    <link rel="preload" href="{{ config('app.url') . '/js/manifest.js?v=' . config('app.version') }}" as="script">
-    <link rel="preload" href="{{ config('app.url') . '/js/vendor.js?v=' . config('app.version') }}" as="script">
-    <link rel="preload" href="{{ config('app.url') . '/js/app.js?v=' . config('app.version') }}" as="script">
-    <script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="{{ config('app.name') }}">
+	<meta name="theme-color" content="#004576"/>
+	<link rel="manifest" href="{{ config('app.url')}}/_manifest">
+	<link rel="apple-touch-icon" href="{{ config('app.url')}}/public/icons/manifest/icon-152.png">
+	<link rel="icon" href="{{ config('app.url') . '/public/favicon.ico' }}" type="image/x-icon"/>
+	<title>{{ config('app.name') }}</title>
+	<link rel="preload" href="{{ config('app.url') . '/js/manifest.js?v=' . config('app.version') }}" as="script">
+	<link rel="preload" href="{{ config('app.url') . '/js/vendor.js?v=' . config('app.version') }}" as="script">
+	<link rel="preload" href="{{ config('app.url') . '/js/app.js?v=' . config('app.version') }}" as="script">
+	<script>
 		var CONFIG = {
 			name: '{{config('app.name')}}',
 			webBase: '{{!empty(parse_url(config('app.url'))['path']) ? parse_url(config('app.url'))['path'] : '/'}}',
@@ -34,11 +34,11 @@
 					.catch(registrationError => console.log('SW registration failed: ', registrationError));
 			});
 		}
-    </script>
-    <script src="{{ config('app.url') . '/js/manifest.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
-    <script src="{{ config('app.url') . '/js/vendor.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
-    <script src="{{ config('app.url') . '/js/app.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
-    <style type="text/css">{{ file_get_contents(config('app.root_folder') . '/public/css/app.css') }}</style>
+	</script>
+	<script src="{{ config('app.url') . '/js/manifest.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
+	<script src="{{ config('app.url') . '/js/vendor.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
+	<script src="{{ config('app.url') . '/js/app.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
+	<style type="text/css">{{ file_get_contents(config('app.root_folder') . '/public/css/app.css') }}</style>
 </head>
 <body>
 <div class="dp-app"></div>

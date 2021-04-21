@@ -18,8 +18,7 @@
 <script>
 export default {
 	computed: {
-		loading()
-		{
+		loading() {
 			return this.$store.state.loadingStatus;
 		}
 	}

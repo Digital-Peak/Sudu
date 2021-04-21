@@ -7,14 +7,13 @@
 
 namespace Sudu\Models;
 
-use Sudu\Entity\Directory;
 use Illuminate\Contracts\Filesystem\FileExistsException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Sudu\Entity\Directory;
 
 class Folder
 {
-	public function createFolder(string $name, string $parent): Directory
-	{
+	public function createFolder(string $name, string $parent): Directory {
 		if (!file_exists($parent)) {
 			throw new FileNotFoundException('Parent not found', 500);
 		}

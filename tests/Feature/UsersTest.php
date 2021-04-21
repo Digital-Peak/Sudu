@@ -7,21 +7,19 @@
 
 namespace Sudu\Tests\Feature;
 
+use Laravel\Sanctum\Sanctum;
 use Sudu\Models\User;
 use Sudu\Tests\TestCase;
-use Laravel\Sanctum\Sanctum;
 
 class UsersTest extends TestCase
 {
-	public function testGetMeNotAuthenticated()
-	{
+	public function testGetMeNotAuthenticated() {
 		$response = $this->getJson('/api/v1/users/me');
 
 		$response->assertStatus(401);
 	}
 
-	public function testGetMeAuthenticated()
-	{
+	public function testGetMeAuthenticated() {
 		Sanctum::actingAs(User::factory()->create(['name' => 'admin']), ['*']);
 
 		$response = $this->getJson('/api/v1/users/me');
@@ -30,8 +28,7 @@ class UsersTest extends TestCase
 		$response->assertJson(['name' => 'admin']);
 	}
 
-	public function testUsersGet()
-	{
+	public function testUsersGet() {
 		$user = User::factory()->create(['name' => 'test-user']);
 
 		Sanctum::actingAs(User::factory()->create(), ['*']);
@@ -42,8 +39,7 @@ class UsersTest extends TestCase
 		$response->assertJson(['name' => 'test-user']);
 	}
 
-	public function testUsersGetNotExisting()
-	{
+	public function testUsersGetNotExisting() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$response = $this->getJson('/api/v1/users/100');
@@ -51,8 +47,7 @@ class UsersTest extends TestCase
 		$response->assertStatus(404);
 	}
 
-	public function testUsersList()
-	{
+	public function testUsersList() {
 		Sanctum::actingAs(User::factory()->create(['name' => 'admin']), ['*']);
 
 		User::factory()->create(['name' => 'test-user']);
@@ -64,8 +59,7 @@ class UsersTest extends TestCase
 		$response->assertJson([['name' => 'admin'], ['name' => 'test-user']]);
 	}
 
-	public function testUsersListOnlyAdmin()
-	{
+	public function testUsersListOnlyAdmin() {
 		Sanctum::actingAs(User::factory()->create(['name' => 'admin']), ['*']);
 
 		$response = $this->getJson('/api/v1/users');
@@ -75,8 +69,7 @@ class UsersTest extends TestCase
 		$response->assertJson([['name' => 'admin']]);
 	}
 
-	public function testUsersCreate()
-	{
+	public function testUsersCreate() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$response = $this->postJson('/api/v1/users', ['name' => 'test', 'email' => 'test@example.com', 'password' => 'test']);
@@ -88,8 +81,7 @@ class UsersTest extends TestCase
 	/**
 	 * @dataProvider invalidUserData
 	 */
-	public function testUsersCreateInvalidData($data)
-	{
+	public function testUsersCreateInvalidData($data) {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$response = $this->postJson('/api/v1/users', $data);
@@ -97,8 +89,7 @@ class UsersTest extends TestCase
 		$response->assertStatus(422);
 	}
 
-	public function testUsersUpdate()
-	{
+	public function testUsersUpdate() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$user = User::factory()->create(['name' => 'test']);
@@ -115,8 +106,7 @@ class UsersTest extends TestCase
 	/**
 	 * @dataProvider invalidUserData
 	 */
-	public function testUsersUpdateInvalidData($data)
-	{
+	public function testUsersUpdateInvalidData($data) {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$user = User::factory()->create(['name' => 'test']);
@@ -126,8 +116,7 @@ class UsersTest extends TestCase
 		$response->assertStatus($data['password'] ? 422 : 200);
 	}
 
-	public function testUsersUpdateInvalid()
-	{
+	public function testUsersUpdateInvalid() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$response = $this->putJson('/api/v1/users/100', ['name' => 'test edited', 'email' => 'testedited@example.com', 'password' => 'test']);
@@ -135,8 +124,7 @@ class UsersTest extends TestCase
 		$response->assertStatus(404);
 	}
 
-	public function testUsersDelete()
-	{
+	public function testUsersDelete() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$user = User::factory()->create(['name' => 'test']);
@@ -146,8 +134,7 @@ class UsersTest extends TestCase
 		$response->assertStatus(200);
 	}
 
-	public function testUsersDeleteInvalid()
-	{
+	public function testUsersDeleteInvalid() {
 		Sanctum::actingAs(User::factory()->create(), ['*']);
 
 		$response = $this->deleteJson('/api/v1/users/100');
@@ -155,8 +142,7 @@ class UsersTest extends TestCase
 		$response->assertStatus(404);
 	}
 
-	public function invalidUserData(): array
-	{
+	public function invalidUserData(): array {
 		return [
 			[['name' => 'test', 'email' => 'test', 'password' => 'test']],
 			[['name' => '', 'email' => 'test@example.com', 'password' => 'test']],

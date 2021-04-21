@@ -9,11 +9,10 @@ axios.defaults.withCredentials = true;
 
 export default {
 	apiUrl: window.CONFIG.webBase + '/public/api/v1',
-	users()
-	{
+	users() {
 		return {
 			get: (id) => {
-				return axios.get(this.apiUrl + '/users/' + (id ? id : 'me'))
+				return axios.get(this.apiUrl + '/users/' + (id || 'me'))
 					.then((res) => res.data)
 					.catch(this.handleError);
 			},
@@ -37,10 +36,9 @@ export default {
 					.then((res) => res.data)
 					.catch(this.handleError);
 			}
-		}
+		};
 	},
-	user()
-	{
+	user() {
 		return {
 			login: (email, password) => {
 				return axios.get(this.apiUrl + '/sanctum/csrf-cookie')
@@ -52,10 +50,9 @@ export default {
 				return axios.get(this.apiUrl + '/user/logout')
 					.catch(this.handleError);
 			}
-		}
+		};
 	},
-	files()
-	{
+	files() {
 		return {
 			get: (path) => {
 				return axios.get(this.apiUrl + '/files' + path)
@@ -85,7 +82,7 @@ export default {
 					.then((res) => res.data)
 					.catch(this.handleError);
 			}
-		}
+		};
 	},
 	handleError: (err) => {
 		let message = err.message ? err.message : err;

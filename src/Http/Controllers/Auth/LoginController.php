@@ -7,22 +7,20 @@
 
 namespace Sudu\Http\Controllers\Auth;
 
-use Sudu\Http\Controllers\Controller;
-use Sudu\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Sudu\Http\Controllers\Controller;
+use Sudu\Models\User;
 
 class LoginController extends Controller
 {
 	use AuthenticatesUsers;
 
-	protected function authenticated(Request $request, User $user)
-	{
+	protected function authenticated(Request $request, User $user) {
 		return response()->json($user);
 	}
 
-	protected function loggedOut(Request $request)
-	{
+	protected function loggedOut(Request $request) {
 		return response()->json();
 	}
 }

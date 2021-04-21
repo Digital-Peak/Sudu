@@ -5,15 +5,15 @@
 -->
 
 <template>
-	<figure :id="image.id" ref="dpImage" v-bind:class="{'dp-image_selected': image.selected}" class="dp-image">
+	<figure :id="image.id" ref="dpImage" :class="{'dp-image_selected': image.selected}" class="dp-image">
 		<figcaption class="dp-image__caption dp-caption">
 			<div class="dp-caption__title">{{ image.title }}</div>
 			<span class="dp-caption__data">
 				<span class="dp-caption__info">{{ formatDate(image.data.date) }}</span>
 				<span class="dp-caption__info">{{ image.data.width }}x{{ image.data.height }}</span>
 				<span class="dp-caption__info">{{ humanFileSize(image.data.size) }}</span>
-				<input type="checkbox" :value="image.path" name="images[]" v-model="image.selected"
-					   :aria-label="$t('component.image.button.download')" class="dp-caption__info dp-caption__checkbox">
+				<input type="checkbox" name="images[]" v-model="select"
+					:aria-label="$t('component.image.button.download')" class="dp-caption__info dp-caption__checkbox">
 				<a :href="imagePath(image.path)" :aria-label="image.title" download class="dp-caption__info dp-caption__download">
 					<svg class="dp-caption__icon">
 						<use href="#dp-icon-download"/>
@@ -23,32 +23,36 @@
 		</figcaption>
 		<router-link :to="'/media' + encodeURI(image.path)" :aria-label="image.title" class="dp-image__link">
 			<img :src="this.$store.state.config.webBase + '/icons/default.jpg'" :data-src="imagePath(image.thumbnail.path)" width="300" height="300"
-				 class="dp-image__image" :alt="image.title">
+				class="dp-image__image" :alt="image.title">
 		</router-link>
 	</figure>
 </template>
 
 <script>
-import {DownloadIcon} from '@heroicons/vue/solid';
-
 export default {
 	props: ['image'],
+	computed: {
+		select: {
+			get() {
+				return this.image.selected;
+			},
+			set(value) {
+				this.$store.commit('SELECT_IMAGE', {id: this.image.id, checked: value});
+			}
+		}
+	},
 	methods: {
-		imagePath(path)
-		{
+		imagePath(path) {
 			return this.$store.state.config.webBase + '/' + this.$store.state.config.webImageFolder + path;
 		},
-		humanFileSize(size)
-		{
+		humanFileSize(size) {
 			const i = Math.floor(Math.log(size) / Math.log(1024));
 			return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
 		},
-		formatDate(date)
-		{
+		formatDate(date) {
 			return (new Date(date)).toDateString();
 		}
-	},
-	components: {DownloadIcon}
+	}
 };
 </script>
 

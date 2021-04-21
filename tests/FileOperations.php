@@ -16,8 +16,7 @@ trait FileOperations
 {
 	private $root;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		$this->root = __DIR__;
 
 		$fs = new Filesystem();
@@ -29,31 +28,19 @@ trait FileOperations
 		parent::setUp();
 	}
 
-	public function tearDown(): void
-	{
-		parent::tearDown();
-
-		(new Filesystem())->deleteDirectory($this->getRoot());
-	}
-
 	/**
 	 * Returns the root of the temporary space.
 	 *
 	 * @return string
 	 */
-	protected function getRoot(): string
-	{
+	protected function getRoot(): string {
 		return $this->root . '/tmp';
 	}
 
-	/**
-	 * Returns the images folder within the temporary space.
-	 *
-	 * @return string
-	 */
-	protected function getImagesRoot(): string
-	{
-		return $this->getRoot() . '/images';
+	public function tearDown(): void {
+		parent::tearDown();
+
+		(new Filesystem())->deleteDirectory($this->getRoot());
 	}
 
 	/**
@@ -61,8 +48,7 @@ trait FileOperations
 	 *
 	 * @return string
 	 */
-	protected function getProjectRoot(): string
-	{
+	protected function getProjectRoot(): string {
 		return dirname($this->root);
 	}
 
@@ -73,9 +59,17 @@ trait FileOperations
 	 *
 	 * @see getImagesRoot()
 	 */
-	protected function createFolder(string $name)
-	{
+	protected function createFolder(string $name) {
 		(new Filesystem())->makeDirectory($this->getImagesRoot() . '/' . $name);
+	}
+
+	/**
+	 * Returns the images folder within the temporary space.
+	 *
+	 * @return string
+	 */
+	protected function getImagesRoot(): string {
+		return $this->getRoot() . '/images';
 	}
 
 	/**
@@ -88,8 +82,7 @@ trait FileOperations
 	 *
 	 * @see getImagesRoot()
 	 */
-	protected function copy(string $source, string $destination)
-	{
+	protected function copy(string $source, string $destination) {
 		$parent = dirname($this->getImagesRoot() . '/' . $destination);
 
 		$fs = new Filesystem();
@@ -122,8 +115,7 @@ trait FileOperations
 	 *
 	 * @see getImagesRoot()
 	 */
-	protected function deleteFs($path)
-	{
+	protected function deleteFs($path) {
 		$fullPath = $this->getImagesRoot() . '/' . $path;
 
 		$fs = new Filesystem();

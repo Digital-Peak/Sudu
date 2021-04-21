@@ -31,8 +31,7 @@ import api from '../plugins/api';
 export default {
 	emits: ['close'],
 	methods: {
-		emit(submit)
-		{
+		emit(submit) {
 			if (!submit) {
 				this.$emit('close');
 				return;

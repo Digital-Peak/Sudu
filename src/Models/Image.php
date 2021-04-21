@@ -13,16 +13,14 @@ use Illuminate\Http\UploadedFile;
 
 class Image
 {
-	public function deleteImages(array $images): void
-	{
+	public function deleteImages(array $images): void {
 		$filesystem = new Filesystem();
 		foreach ($images as $image) {
 			$filesystem->delete($image);
 		}
 	}
 
-	public function createImage(UploadedFile $image, string $parent): \Sudu\Entity\Image
-	{
+	public function createImage(UploadedFile $image, string $parent): \Sudu\Entity\Image {
 		if (!file_exists($parent)) {
 			throw new FileNotFoundException('Parent not found', 500);
 		}
