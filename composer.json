@@ -16,7 +16,7 @@
     "laravel/sanctum": "^2.9",
     "laravel/tinker": "^2.5",
     "laravel/ui": "^3.2",
-    "squizlabs/php_codesniffer": "*"
+    "squizlabs/php_codesniffer": "^3.6.0"
   },
   "require-dev": {
     "facade/ignition": "^2.5",
@@ -43,8 +43,8 @@
       "@putenv XDEBUG_MODE=coverage",
       "phpunit --color=always --coverage-html=\"tests/coverage\""
     ],
-    "style": "phpcs . -p --severity=1 --colors --standard=PHPCS.xml",
-    "stylefx": "phpcbf . -p --severity=1 --colors --standard=PHPCS.xml"
+    "style": "phpcs . -p --severity=1 --colors --standard=phpcs.xml",
+    "stylefx": "phpcbf . -p --severity=1 --colors --standard=phpcs.xml"
   },
   "config": {
     "optimize-autoloader": true,

@@ -43,7 +43,7 @@ class FilesTest extends TestCase
 		$response = $this->getJson('/api/v1/files');
 
 		$response->assertStatus(200);
-		$response->assertExactJson([['title' => 'Testing', 'path' => '/', 'type' => 'dir']]);
+		$response->assertJson([['title' => 'Testing', 'path' => '/', 'type' => 'dir']]);
 		$this->assertDirectoryExists($this->getImagesRoot());
 	}
 
@@ -108,7 +108,7 @@ class FilesTest extends TestCase
 		$response = $this->postJson('/api/v1/files/folder/test');
 
 		$response->assertStatus(200);
-		$response->assertExactJson(['title' => 'Test', 'path' => '/test', 'type' => 'dir']);
+		$response->assertJson(['title' => 'Test', 'path' => '/test', 'type' => 'dir']);
 	}
 
 	public function testCreateFolderParent() {
@@ -119,7 +119,7 @@ class FilesTest extends TestCase
 		$response = $this->postJson('/api/v1/files/folder/sub/test');
 
 		$response->assertStatus(200);
-		$response->assertExactJson(['title' => 'Test', 'path' => '/sub/test', 'type' => 'dir']);
+		$response->assertJson(['title' => 'Test', 'path' => '/sub/test', 'type' => 'dir']);
 	}
 
 	public function testCreateImage() {
