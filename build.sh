@@ -26,7 +26,9 @@ cd tmp
 
 rm -rf bootstrap/cache/*
 rm -rf storage/logs/*
-rm -rf storage/framework/*
+rm -rf storage/framework/cache/*
+rm -rf storage/framework/sessions/*
+rm -rf storage/framework/views/*
 rm -rf database/database.sqlite
 
 if [ ! -z $1 ]; then

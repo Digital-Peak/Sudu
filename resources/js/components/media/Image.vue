@@ -22,7 +22,8 @@
 			</span>
 		</figcaption>
 		<router-link :to="'/media' + encodeURI(image.path)" :aria-label="image.title" class="dp-image__link">
-			<img :data-src="imagePath(image.thumbnail.path)" :width="300" :height="300" class="dp-image__image" :alt="image.title">
+			<img :src="this.$store.state.config.webBase + '/icons/default.jpg'" :data-src="imagePath(image.thumbnail.path)" width="300" height="300"
+				 class="dp-image__image" :alt="image.title">
 		</router-link>
 	</figure>
 </template>

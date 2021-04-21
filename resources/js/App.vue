@@ -69,13 +69,3 @@ export default {
 	components: {dpSidebar: Sidebar, dpLoader: Loader, dpMessage: Message, dpHeader: Header}
 };
 </script>
-
-<style>
-.dp-app {
-	position: relative;
-	margin: 0 auto;
-	padding: 1rem;
-	background-color: white;
-	font-family: arial, courier, helvetica;
-}
-</style>

@@ -104,6 +104,10 @@ export default {
 		transition-property: background-color, border-color, color, fill, stroke;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 300ms;
+
+		&:focus {
+			outline: none;
+		}
 	}
 
 	&__icon {
@@ -128,6 +132,10 @@ export default {
 			border-top: var(--dp-border);
 			font-size: inherit;
 			cursor: pointer;
+
+			&:focus {
+				outline: none;
+			}
 		}
 
 		&-icon {

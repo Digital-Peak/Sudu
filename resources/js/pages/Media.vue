@@ -48,13 +48,24 @@ export default {
 	{
 		this.$store.commit('SET_TITLE', this.$store.getters.current.title);
 
+		const images = Array.from(document.querySelectorAll('.dp-image__image'));
+
+		// Preload first image
+		if (images.length) {
+			const preloadLink = document.createElement('link');
+			preloadLink.href = images[0].dataset.src;
+			preloadLink.rel = 'preload';
+			preloadLink.as = 'image';
+			document.head.appendChild(preloadLink);
+		}
+
 		if (!this.observer) {
-			Array.from(document.querySelectorAll('.dp-image__image')).forEach((image) => image.src = image.dataset.src);
+			images.forEach((image) => image.src = image.dataset.src);
 			return;
 		}
 
 		this.observer.disconnect();
-		Array.from(document.querySelectorAll('.dp-image__image')).forEach((image) => this.observer.observe(image));
+		images.forEach((image) => this.observer.observe(image));
 	},
 	methods: {
 		observeImages(entries)
