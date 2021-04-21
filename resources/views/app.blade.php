@@ -28,11 +28,7 @@
 			fallbackLocale: '{{config('app.fallback_locale')}}'
 		};
 		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', () => {
-				navigator.serviceWorker.register('{{ config('app.url') . '/sw.js'}}')
-					.then(reg => console.log('Registration succeeded. Scope is ' + reg.scope))
-					.catch(registrationError => console.log('SW registration failed: ', registrationError));
-			});
+			window.addEventListener('load', () => navigator.serviceWorker.register('{{ config('app.url') . '/sw.js'}}'));
 		}
 	</script>
 	<script src="{{ config('app.url') . '/js/manifest.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
