@@ -33,6 +33,7 @@ The following links provide information for end users:
 The following links provide information for developers:
 - [Development](docs/developer/Development.md)
 - [Api documentation](docs/developer/Api.md)
+- [Contribution](docs/developer/Contribution.md)
 
 ## Licensing
 The source code is licensed under GPL v3. License is available [here](LICENSE).
