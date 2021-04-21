@@ -12,8 +12,10 @@ use Sudu\Tests\TestCase;
 class WebTest extends TestCase
 {
 	public function testGetWebSite() {
-		$response = $this->get('');
+		$this->copy($this->getProjectRoot() . '/public', $this->getRoot() . '/public');
+		$this->copy($this->getProjectRoot() . '/resources', $this->getRoot() . '/resources');
 
+		$response = $this->get('');
 		$response->assertStatus(200);
 		$response->assertSeeText('Testing');
 	}
