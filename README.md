@@ -1,6 +1,7 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/Digital-Peak/Sudu/main/docs/banner.jpg" alt="Sudu image gallery">
 </p>
+
 # Sudu
 A free and open source image gallery with performance in mind.
 
