@@ -1,0 +1,46 @@
+name: Sudu CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHP code style check
+        run: composer run-script style
+
+      - name: Run PHP test suite
+        run: composer run-script test
+
+      - name: Install JS dependencies
+        run: npm install
+
+      - name: Run asset build
+        run: npm run prod
+
+      - name: Run JS code style check
+        run: npm run style
