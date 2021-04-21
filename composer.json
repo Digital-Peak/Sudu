@@ -43,8 +43,8 @@
       "@putenv XDEBUG_MODE=coverage",
       "phpunit --color=always --coverage-html=\"tests/coverage\""
     ],
-    "style": "phpcs . -p --severity=1 --colors --standard=PHPCS.xml",
-    "stylefx": "phpcbf . -p --severity=1 --colors --standard=PHPCS.xml"
+    "style": "phpcs . -p --severity=1 --colors --standard=phpcs.xml",
+    "stylefx": "phpcbf . -p --severity=1 --colors --standard=phpcs.xml"
   },
   "config": {
     "optimize-autoloader": true,
