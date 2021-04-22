@@ -14,9 +14,9 @@
 		</span>
 		<cloud-upload-icon @click="$refs.dpUpload.click()" v-if="user.id" class="dp-toolbar__icon dp-toolbar__icon-upload"/>
 		<input type="file" @change="upload" v-if="user.id" ref="dpUpload" accept="image/png,image/gif,image/jpeg,image/webp"
-			   multiple class="dp-toolbar__input">
+			multiple class="dp-toolbar__input">
 		<div class="dp-toolbar__files" v-if="user.id && files">
-			<div v-for="file in files" class="dp-toolbar__file dp-file">
+			<div v-for="file in files" :key="file.name" class="dp-toolbar__file dp-file">
 				<div class="dp-file__progress" v-if="file.progress < 100">{{ file.progress }}%</div>
 				<check-circle-icon class="dp-file__finished" v-if="file.progress === 100"/>
 				<div class="dp-file__name">{{ file.file.name }}</div>
@@ -31,7 +31,7 @@ import api from '../../plugins/api';
 
 export default {
 	data() {
-		return {files: []}
+		return {files: []};
 	},
 	computed: {
 		selectedImages() {

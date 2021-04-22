@@ -14,7 +14,7 @@ import App from './App';
 const app = createApp(App);
 app.directive('focus', {
 	mounted(el) {
-		el.focus()
+		el.focus();
 	}
 });
 app.use(router);
