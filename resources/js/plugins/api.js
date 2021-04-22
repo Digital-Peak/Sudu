@@ -64,16 +64,16 @@ export default {
 					.then((res) => res.data)
 					.catch(this.handleError);
 			},
-			upload: (image, parentPath, progress) => {
+			upload: (image, parentPath, progressCallback) => {
 				const data = new FormData();
 				data.append('file', image);
 
 				const config = {
 					onUploadProgress: (event) => {
-						if (!progress) {
+						if (!progressCallback) {
 							return;
 						}
-						progress(Math.round((event.loaded * 100) / event.total));
+						progressCallback(Math.round((event.loaded * 100) / event.total));
 					}
 				};
 

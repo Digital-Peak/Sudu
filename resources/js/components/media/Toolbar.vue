@@ -63,13 +63,12 @@ export default {
 				}).catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		},
 		async upload(event) {
-			this.files = Array.from(event.target.files).map((file) => ({file: file, progress: 0}));
-			const promises = [];
+			Array.from(event.target.files).forEach((file) => this.files.push({file: file, progress: 0, promise: null}));
 			this.files.forEach((image) => {
-				promises.push(api.files().upload(image.file, this.$store.getters.current.path, (progress) => image.progress = progress)
-					.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'})));
+				image.promise = api.files().upload(image.file, this.$store.getters.current.path, (progress) => image.progress = progress)
+					.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 			});
-			Promise.all(promises).then(() => {
+			Promise.all(this.files.map((file) => file.promise)).then(() => {
 				this.$refs.dpUpload.value = null;
 				this.files = [];
 				this.$store.dispatch('fetchFiles', this.$store.getters.current.path);
