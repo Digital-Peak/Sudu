@@ -64,11 +64,20 @@ export default {
 					.then((res) => res.data)
 					.catch(this.handleError);
 			},
-			upload: (image, parentPath) => {
+			upload: (image, parentPath, progress) => {
 				const data = new FormData();
 				data.append('file', image);
 
-				return axios.post(this.apiUrl + '/files/images' + parentPath + '/' + image.name, data)
+				const config = {
+					onUploadProgress: (event) => {
+						if (!progress) {
+							return;
+						}
+						progress(Math.round((event.loaded * 100) / event.total));
+					}
+				};
+
+				return axios.post(this.apiUrl + '/files/images' + parentPath + '/' + image.name, data, config)
 					.then((res) => res.data)
 					.catch(this.handleError);
 			},

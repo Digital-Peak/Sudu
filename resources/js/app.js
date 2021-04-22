@@ -12,6 +12,11 @@ import i18n from './plugins/i18n';
 import App from './App';
 
 const app = createApp(App);
+app.directive('focus', {
+	mounted(el) {
+		el.focus()
+	}
+});
 app.use(router);
 app.use(store);
 app.use(i18n);

@@ -13,15 +13,26 @@
 			<download-icon @click="download" class="dp-toolbar__icon dp-toolbar__icon-download" ref="dpDownloadIcon"/>
 		</span>
 		<cloud-upload-icon @click="$refs.dpUpload.click()" v-if="user.id" class="dp-toolbar__icon dp-toolbar__icon-upload"/>
-		<input type="file" @change="upload" ref="dpUpload" accept="image/png,image/gif,image/jpeg,image/webp" multiple class="dp-toolbar__input">
+		<input type="file" @change="upload" v-if="user.id" ref="dpUpload" accept="image/png,image/gif,image/jpeg,image/webp"
+			   multiple class="dp-toolbar__input">
+		<div class="dp-toolbar__files" v-if="user.id && files">
+			<div v-for="file in files" class="dp-toolbar__file dp-file">
+				<div class="dp-file__progress" v-if="file.progress < 100">{{ file.progress }}%</div>
+				<check-circle-icon class="dp-file__finished" v-if="file.progress === 100"/>
+				<div class="dp-file__name">{{ file.file.name }}</div>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
-import {CloudUploadIcon, DownloadIcon, FolderAddIcon, TrashIcon, ShareIcon} from '@heroicons/vue/solid';
+import {CheckCircleIcon, CloudUploadIcon, DownloadIcon, FolderAddIcon, TrashIcon, ShareIcon} from '@heroicons/vue/solid';
 import api from '../../plugins/api';
 
 export default {
+	data() {
+		return {files: []}
+	},
 	computed: {
 		selectedImages() {
 			return this.$store.getters.images.filter((image) => image.selected);
@@ -51,29 +62,16 @@ export default {
 					link.click();
 				}).catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		},
-		upload(event) {
+		async upload(event) {
+			this.files = Array.from(event.target.files).map((file) => ({file: file, progress: 0}));
 			const promises = [];
-			Array.from(event.target.files).forEach((image) => {
-				this.$store.commit(
-					'SET_MESSAGE',
-					{
-						text: this.$t('component.toolbar.action.upload.started', {title: image.name}),
-						type: 'info'
-					}
-				);
-				promises.push(api.files().upload(image, this.$store.getters.current.path)
-					.then((file) => {
-						this.$store.commit(
-							'SET_MESSAGE',
-							{
-								text: this.$t('component.toolbar.action.upload.success', file),
-								type: 'info'
-							}
-						);
-					}).catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'})));
+			this.files.forEach((image) => {
+				promises.push(api.files().upload(image.file, this.$store.getters.current.path, (progress) => image.progress = progress)
+					.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'})));
 			});
 			Promise.all(promises).then(() => {
 				this.$refs.dpUpload.value = null;
+				this.files = [];
 				this.$store.dispatch('fetchFiles', this.$store.getters.current.path);
 			});
 		},
@@ -109,7 +107,7 @@ export default {
 				.catch((error) => this.$store.commit('SET_MESSAGE', {text: error.message, type: 'error'}));
 		}
 	},
-	components: {CloudUploadIcon, DownloadIcon, FolderAddIcon, TrashIcon, ShareIcon}
+	components: {CheckCircleIcon, CloudUploadIcon, DownloadIcon, FolderAddIcon, TrashIcon, ShareIcon}
 };
 </script>
 
@@ -120,6 +118,7 @@ export default {
 	left: 1rem;
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 
 	&__icon {
 		width: var(--dp-icon-size);
@@ -135,6 +134,36 @@ export default {
 
 	&__input {
 		display: none;
+	}
+
+	&__files {
+		width: 100%;
+		color: #ffffff;
+		background-color: #000000;
+		border: 1px solid var(--dp-border);
+		box-shadow: var(--dp-shadow);
+	}
+
+	.dp-file {
+		display: flex;
+		align-items: center;
+		padding: 1rem;
+		border-bottom: var(--dp-border);
+
+		&:last-of-type {
+			border-bottom: 0;
+		}
+
+		&__progress {
+			min-width: 3rem;
+		}
+
+		&__finished {
+			min-width: 3rem;
+			width: 1.5rem;
+			height: 1.5rem;
+			fill: #155724;
+		}
 	}
 
 	@media only screen and (max-width: 640px) {
