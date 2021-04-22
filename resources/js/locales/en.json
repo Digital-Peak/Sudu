@@ -44,10 +44,6 @@
     },
     "toolbar": {
       "action": {
-        "upload": {
-          "started": "Started to upload image {title}",
-          "success": "Successfully uploaded image {title}"
-        },
         "delete": {
           "success": "Successfully deleted image | Successfully deleted images"
         }

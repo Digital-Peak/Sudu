@@ -75,7 +75,7 @@ export default {
 	}
 
 	&:nth-of-type(odd) {
-		background-color: #E5E7EBFF;
+		background-color: #E5E7EB;
 	}
 }
 </style>

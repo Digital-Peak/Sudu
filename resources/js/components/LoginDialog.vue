@@ -10,7 +10,7 @@
 			<form class="dp-login-dialog__form dp-form" @submit.prevent>
 				<div class="dp-form__block">
 					<label class="dp-form__label">{{ $t('component.login.dialog.input.email') }}</label>
-					<input type="text" :placeholder="$t('component.login.dialog.input.email')" ref="dpInputEmail" class="dp-form__input">
+					<input type="text" :placeholder="$t('component.login.dialog.input.email')" ref="dpInputEmail" class="dp-form__input" v-focus>
 				</div>
 				<div class="dp-form__block">
 					<label class="dp-form__label">{{ $t('component.login.dialog.input.password') }}</label>
@@ -63,6 +63,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	background-color: var(--dp-overlay);
+	pointer-events: auto;
 
 	&__content {
 		width: 80%;

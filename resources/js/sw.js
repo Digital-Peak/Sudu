@@ -15,6 +15,11 @@ self.addEventListener('install', (e) => {
 	);
 });
 self.addEventListener('fetch', (event) => {
+	if (event.request.method !== 'GET') {
+		event.respondWith(fetch(event.request));
+		return;
+	}
+
 	event.respondWith(
 		caches.open('Sudu').then((cache) => {
 			return fetch(event.request).then((response) => {
