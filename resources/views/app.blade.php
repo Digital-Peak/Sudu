@@ -14,26 +14,26 @@
 	<meta name="theme-color" content="#004576"/>
 	<link rel="manifest" href="{{ config('app.url')}}/_manifest">
 	<link rel="apple-touch-icon" href="{{ config('app.url')}}/public/icons/manifest/icon-152.png">
-	<link rel="icon" href="{{ config('app.url') . '/public/favicon.ico' }}" type="image/x-icon"/>
+	<link rel="icon" href="{{ config('app.url') . mix('/favicon.ico') }}" type="image/x-icon"/>
 	<title>{{ config('app.name') }}</title>
-	<link rel="preload" href="{{ config('app.url') . '/js/manifest.js?v=' . config('app.version') }}" as="script">
-	<link rel="preload" href="{{ config('app.url') . '/js/vendor.js?v=' . config('app.version') }}" as="script">
-	<link rel="preload" href="{{ config('app.url') . '/js/app.js?v=' . config('app.version') }}" as="script">
+	<link rel="preload" href="{{ config('app.url') . mix('/js/manifest.js') }}" as="script">
+	<link rel="preload" href="{{ config('app.url') . mix('/js/vendor.js') }}" as="script">
+	<link rel="preload" href="{{ config('app.url') . mix('/js/app.js') }}" as="script">
 	<script>
 		var CONFIG = {
-			name: '{{config('app.name')}}',
-			webBase: '{{!empty(parse_url(config('app.url'))['path']) ? parse_url(config('app.url'))['path'] : '/'}}',
-			webImageFolder: '{{config('app.web_images_folder')}}',
-			locale: '{{config('app.locale')}}',
-			fallbackLocale: '{{config('app.fallback_locale')}}'
+			name: '{{ config('app.name') }}',
+			webBase: '{{ !empty(parse_url(config('app.url'))['path']) ? parse_url(config('app.url'))['path'] : '/' }}',
+			webImageFolder: '{{ config('app.web_images_folder') }}',
+			locale: '{{ config('app.locale') }}',
+			fallbackLocale: '{{ config('app.fallback_locale') }}'
 		};
 		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', () => navigator.serviceWorker.register('{{ config('app.url') . '/sw.js'}}'));
+			window.addEventListener('load', () => navigator.serviceWorker.register('{{ config('app.url') . mix('/sw.js') }}'));
 		}
 	</script>
-	<script src="{{ config('app.url') . '/js/manifest.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
-	<script src="{{ config('app.url') . '/js/vendor.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
-	<script src="{{ config('app.url') . '/js/app.js?v=' . config('app.version') }}" type="text/javascript" defer></script>
+	<script src="{{ config('app.url') . mix('/js/manifest.js') }}" type="text/javascript" defer></script>
+	<script src="{{ config('app.url') . mix('/js/vendor.js') }}" type="text/javascript" defer></script>
+	<script src="{{ config('app.url') . mix('/js/app.js') }}" type="text/javascript" defer></script>
 	<style type="text/css">{{ file_get_contents(config('app.root_folder') . '/public/css/app.css') }}</style>
 </head>
 <body>
