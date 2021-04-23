@@ -3,7 +3,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 mix.setPublicPath('public');
 mix.webpackConfig({
-	output: {chunkFilename: 'js/components/[name].js'},
+	output: {chunkFilename: 'js/components/[name].js?id=[chunkhash]'},
 	// Enable if you want to analyze the bundle
 	// plugins: [new BundleAnalyzerPlugin({analyzerMode: 'static'})]
 });
@@ -16,4 +16,5 @@ mix.copy('resources/js/sw.js', 'public/sw.js');
 mix.extract();
 mix.js('resources/js/app.js', 'js')
 	.sass('resources/scss/app.scss', 'css')
-	.vue();
+	.vue()
+	.version();

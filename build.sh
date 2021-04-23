@@ -41,7 +41,6 @@ composer install --optimize-autoloader --no-dev
 npm install
 npm run prod
 
-rm public/mix-manifest.json
 rm composer.json
 rm composer.lock
 rm package.json
